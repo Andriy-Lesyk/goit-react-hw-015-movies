@@ -8,14 +8,14 @@ function Navigation() {
       <NavLink
         to="/trending/get-trending"
         className={styles.link}
-        active={styles.activeLink}
+        activeClassName={styles.activeLink}
       >
         Home
       </NavLink>
       <NavLink
         to="/search/search-movies"
         className={styles.link}
-        active={styles.activeLink}
+        activeClassName={styles.activeLink}
       >
         Movies
       </NavLink>
