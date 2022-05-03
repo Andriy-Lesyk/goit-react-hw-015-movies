@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 
 function PopularMovies() {
+  const { url } = useNavigate();
   const [movies, setMovies] = useState([]);
+  const{movieId} = useParams()
+
+  console.log(movieId)
 
   useEffect(() => {
     fetch(
@@ -17,24 +21,26 @@ function PopularMovies() {
         );
       })
       .then(response => {
-        setMovies(prevState => ({ ...prevState, ...response.results }));
+        setMovies(() => [ ...response.results]);
       });
   }, []);
-  const consol = () => console.log(movies);
-  consol();
 
   return (
-    <div>
+    <>
       <h2>Trending today</h2>
-      <ul>
-        {movies &&
-          movies.map(movie => (
+
+      {movies && (
+        <ul>
+          {movies.map(movie => (
             <li key={movie.id}>
-              <Link>{movie.title}</Link>
+              <Link to={`${url}/${movie.id}'`}>
+                {movie.title ? movie.title : movie.name}
+              </Link>
             </li>
           ))}
-      </ul>
-    </div>
+        </ul>
+      )}
+    </>
   );
 }
 

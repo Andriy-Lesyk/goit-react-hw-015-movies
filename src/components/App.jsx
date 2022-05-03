@@ -1,11 +1,20 @@
-import AppBar from "./AppBar/AppBar";
-import PopularMovies from "./PopularMovies/PopularMovies";
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage/HomePage';
+import MovieDetailsPage from './MovieDetailsPage/MovieDetailsPage';
+import { Layout } from 'components/Layout/Layout';
+import MoviesPage from './MoviesPage/MoviesPage';
 
 export const App = () => {
   return (
     <div>
-      <AppBar/>
-      <PopularMovies/>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="movies" element={<MoviesPage/>}>
+          <Route path=":movieId" element={<MovieDetailsPage />} />
+          </Route>
+        </Route>
+      </Routes>
     </div>
   );
 };
