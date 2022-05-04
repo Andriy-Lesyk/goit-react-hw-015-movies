@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import {Div} from './MovieDetailsPage.styles'
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState({});
   const { movieId } = useParams();
-  console.log(movieId);
 
   useEffect(() => {
     fetch(
@@ -22,11 +22,25 @@ function MovieDetailsPage() {
         setMovie(() => ({ ...response }));
       });
   }, [movieId]);
-  console.log('movie');
+
+  console.log(movie.poster_path);
+
   return (
-    <div>
-      <Outlet />
-    </div>
+    
+    <Div>
+      <div>
+        <img src={`https://www.themoviedb.org${movie.poster_path}`} width='300px' alt={'Poster'} />
+      </div>
+      <div>
+        <h2>{movie.title}</h2>
+        <p>User score: {movie.vote_average}</p>
+        <h4>Overview</h4>
+        <p>{movie.overview}</p>
+        <h4>Genres</h4>
+        <ul>{movie.genres && movie.genres.map(genre => <li key={genre.id}>{genre.name}</li>)}</ul>
+      </div>
+    </Div>
+    
   );
 }
 

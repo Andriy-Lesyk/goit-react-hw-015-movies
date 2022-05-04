@@ -4,13 +4,11 @@ import {
   SearchFormButton,
   SearchFormInput,
 } from './MoviesPage.styles';
-import { useNavigate, Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 
 function MoviesPage() {
   const [search, setSearch] = useState('');
   const [respArray, setRespArray] = useState([]);
-  const { url } = useNavigate();
 
   const handleChange = event => {
     setSearch(event.currentTarget.value);
@@ -59,7 +57,7 @@ function MoviesPage() {
         <ul>
           {respArray.map(movie => (
             <li key={movie.id}>
-              <Link to={`${url}/${movie.id}'`}>
+              <Link to={`${movie.id}'`}>
                 {movie.title ? movie.title : movie.name}
               </Link>
             </li>
