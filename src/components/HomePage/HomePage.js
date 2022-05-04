@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-function PopularMovies() {
+function HomePage() {
   const [movies, setMovies] = useState([]);
 
 
@@ -40,5 +41,13 @@ function PopularMovies() {
     </>
   );
 }
-
-export default PopularMovies;
+HomePage.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};
+export default HomePage;

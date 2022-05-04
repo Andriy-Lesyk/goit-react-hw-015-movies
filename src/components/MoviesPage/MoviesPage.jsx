@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   SearchForm,
   SearchFormButton,
   SearchFormInput,
 } from './MoviesPage.styles';
-import { Link } from 'react-router-dom';
+
 
 function MoviesPage() {
   const [search, setSearch] = useState('');
@@ -67,5 +69,16 @@ function MoviesPage() {
     </div>
   );
 }
+
+MoviesPage.propTypes = {
+  search: PropTypes.string,
+  respArray : PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ),
+};
 
 export default MoviesPage;

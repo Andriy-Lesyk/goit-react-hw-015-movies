@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import {Div} from './MovieDetailsPage.styles'
+import { useParams, Outlet, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Div, Links } from './MovieDetailsPage.styles';
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState({});
@@ -23,25 +24,46 @@ function MovieDetailsPage() {
       });
   }, [movieId]);
 
-  console.log(movie.poster_path);
-
   return (
-    
-    <Div>
-      <div>
-        <img src={`https://www.themoviedb.org${movie.poster_path}`} width='300px' alt={'Poster'} />
-      </div>
-      <div>
-        <h2>{movie.title}</h2>
-        <p>User score: {movie.vote_average}</p>
-        <h4>Overview</h4>
-        <p>{movie.overview}</p>
-        <h4>Genres</h4>
-        <ul>{movie.genres && movie.genres.map(genre => <li key={genre.id}>{genre.name}</li>)}</ul>
-      </div>
-    </Div>
-    
+    <div>
+      <Div>
+        <div>
+          <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} width="250px" alt={'Poster'} />
+        </div>
+        <div>
+          <h2>{movie.title}</h2>
+          <p>User score: {movie.vote_average}</p>
+          <h4>Overview</h4>
+          <p>{movie.overview}</p>
+          <h4>Genres</h4>
+          <ul>
+            {movie.genres &&
+              movie.genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
+          </ul>
+        </div>
+      </Div>
+      <h5>Additional information</h5>
+      <Links>
+        <Link to="cast">Cast</Link>
+        <Link to="reviews">Rewiews</Link>
+      </Links>
+      <Outlet />
+    </div>
   );
 }
 
+MovieDetailsPage.propTypes = {
+  movie: PropTypes.object,
+  poster_path: PropTypes.string,
+  title: PropTypes.string,
+  vote_average: PropTypes.number,
+  overview: PropTypes.string,
+  genres : PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      
+    })
+  ),
+};
 export default MovieDetailsPage;
