@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Outlet, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Div, Links } from './MovieDetailsPage.styles';
+import { Div, Links, Description } from './MovieDetailsPage.styles';
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState({});
@@ -30,7 +30,7 @@ function MovieDetailsPage() {
         <div>
           <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} width="250px" alt={'Poster'} />
         </div>
-        <div>
+        <Description>
           <h2>{movie.title}</h2>
           <p>User score: {movie.vote_average}</p>
           <h4>Overview</h4>
@@ -40,7 +40,7 @@ function MovieDetailsPage() {
             {movie.genres &&
               movie.genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
           </ul>
-        </div>
+        </Description>
       </Div>
       <h5>Additional information</h5>
       <Links>
