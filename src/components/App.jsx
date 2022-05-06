@@ -1,17 +1,28 @@
 import { Routes, Route } from 'react-router-dom';
-import {lazy} from 'react';
-//import HomePage from './HomePage/HomePage';
-import MovieDetailsPage from './MovieDetailsPage/MovieDetailsPage';
-import Layout  from 'components/Layout/Layout';
-import MoviesPage from './MoviesPage/MoviesPage';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
+import { lazy, Suspense } from 'react';
+import Layout from 'components/Layout/Layout';
 
-const HomePage = lazy(()=> import('./HomePage/HomePage'))
+
+const HomePage = lazy(() =>
+  import('./HomePage/HomePage' /* webpackChunkName: "HomePage"*/)
+);
+const Reviews = lazy(() =>
+  import('./Reviews/Reviews' /* webpackChunkName: "Reviews"*/)
+);
+const Cast = lazy(() => import('./Cast/Cast' /* webpackChunkName: "Cast"*/));
+const MoviesPage = lazy(() =>
+  import('./MoviesPage/MoviesPage' /* webpackChunkName: "MoviesPage"*/)
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    './MovieDetailsPage/MovieDetailsPage' /* webpackChunkName: "MovieDetailsPage"*/
+  )
+);
 
 export const App = () => {
   return (
     <div>
+      <Suspense fallback={<h1>Загружаем...</h1>}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -22,6 +33,7 @@ export const App = () => {
           </Route>
         </Route>
       </Routes>
+      </Suspense>
     </div>
   );
 };
